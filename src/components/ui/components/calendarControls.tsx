@@ -6,7 +6,7 @@ function CalendarControls() {
 
 
     return (
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-4 select-none">
             <LucideChevronLeft className="cursor-pointer" onClick={() => {
                 const newStartDate = new Date(startDate)
                 if (calendarView === "month") {

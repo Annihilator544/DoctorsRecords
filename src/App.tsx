@@ -3,7 +3,7 @@ import Calendar from '@/components/calendar'
 
 function App() {
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="h-screen overflow-hidden flex flex-col bg-background">
       <Navbar />
       <Calendar />
     </div>
