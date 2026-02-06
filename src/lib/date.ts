@@ -15,3 +15,7 @@ export function getCalendarDaysForWeek(date: Date) {
 export function getCalendarDaysForDay(date: Date) {
   return [date];
 }
+
+export function doesDateBelongToCurrentMonthView(date: Date, startDate: Date) {
+  return date.getMonth() === startDate.getMonth()
+}

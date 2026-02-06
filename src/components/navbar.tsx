@@ -1,5 +1,5 @@
 import { LucideCalendarDays } from "lucide-react"
-import CalendarControls from "./calendarControls"
+import CalendarControls from "./ui/components/calendarControls"
 import ViewToggle from "./viewToggle"
 
 function Navbar() {
