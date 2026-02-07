@@ -3,12 +3,12 @@ import { useTaskStore } from "@/store/taskStore";
 import { useEffect, useState } from "react";
 import { Input } from "../input";
 import { Button } from "../button";
-import { LucideX } from "lucide-react";
 import { Card, CardContent, CardHeader } from "../card";
+import TaskComponent from "./taskComponent";
 
 function CalendarDayView() {
     const { startDate } = useCalendarStore();
-    const { addTask, getTasksForDate, toggleTask, deleteTask } = useTaskStore();
+    const { addTask, getTasksForDate, toggleTask, deleteTask, updateTaskTitle } = useTaskStore();
     const [newTaskTitle, setNewTaskTitle] = useState("");
     const [allDayTasks, setAllDayTasks] = useState(getTasksForDate(startDate));
 
@@ -33,6 +33,10 @@ function CalendarDayView() {
         deleteTask(id);
         setAllDayTasks(getTasksForDate(startDate));
     }
+
+    const onTitleChange = (id: string, title: string) => {
+        updateTaskTitle(id, title);
+    };
 
     useEffect(() => {
         setAllDayTasks(getTasksForDate(startDate));
@@ -60,28 +64,13 @@ function CalendarDayView() {
                 {allDayTasks.length > 0  ?  (
                     <CardContent className="gap-4 flex flex-col">
                         {allDayTasks.map((task) => (
-                            <div
+                            <TaskComponent
                                 key={task.id}
-                                className="flex items-center gap-2 p-2 bg-background rounded border"
-                            >
-                                <Input
-                                    type="checkbox"
-                                    checked={task.completed}
-                                    onChange={() => toggleTaskId(task.id)}
-                                    className="w-4 h-4 cursor-pointer"
-                                />
-                                <span
-                                    className={`flex-1 ${
-                                        task.completed ? "line-through text-muted-foreground" : ""
-                                    }`}
-                                >
-                                    {task.title}
-                                </span>
-                                <LucideX
-                                    onClick={() => deleteTaskId(task.id)}
-                                    className="cursor-pointer text-destructive hover:opacity-80"
-                                />
-                            </div>
+                                task={task}
+                                toggleTaskId={toggleTaskId}
+                                deleteTaskId={deleteTaskId}
+                                onTitleChange={onTitleChange}
+                            />
                         ))}
                 </CardContent>
                 )

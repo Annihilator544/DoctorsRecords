@@ -8,6 +8,7 @@ interface TaskState {
     deleteTask: (id: string) => void;
     toggleTask: (id: string) => void;
     getTasksForDate: (date: Date) => Task[];
+    updateTaskTitle: (id: string, title: string) => void;
 }
 
 export const useTaskStore = create<TaskState>()(
@@ -38,6 +39,13 @@ export const useTaskStore = create<TaskState>()(
                     );
                 });
                 return tasks;
+            },
+            updateTaskTitle: (id, title) => {
+                set((state) => ({
+                    tasks: state.tasks.map((task) =>
+                        task.id === id ? { ...task, title } : task
+                    ),
+                }));
             },
         }),
         {
