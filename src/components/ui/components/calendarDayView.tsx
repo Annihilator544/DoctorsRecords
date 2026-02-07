@@ -53,7 +53,7 @@ function CalendarDayView() {
                 </Button>
             </form>
 
-            <Card className="flex-1 p-6 hover:shadow-sm">
+            <Card className="flex-1 p-6 max-sm:p-2 hover:shadow-sm">
                 <CardHeader>
                     All Day Tasks
                 </CardHeader>

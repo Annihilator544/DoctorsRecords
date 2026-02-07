@@ -15,7 +15,7 @@ export const useCalendarStore = create<CalendarState>()(
     persist(
         (set) => ({
             startDate: new Date(),
-            calendarView: "month" as CalendarView,
+            calendarView: "day" as CalendarView,
             calendarDays: getCalendarDaysForMonth(new Date()),
             setStartDate: (date) => set((prev) => {
                 let calendarDays: Date[] = []
@@ -42,6 +42,22 @@ export const useCalendarStore = create<CalendarState>()(
         }),
         {
             name: 'calendar-storage',
+            partialize: (state) => ({
+                calendarView: state.calendarView,
+                startDate: state.startDate.toISOString(),
+            }),
+            merge: (persistedState: any, currentState) => ({
+                ...currentState,
+                ...persistedState,
+                startDate: persistedState?.startDate 
+                    ? new Date(persistedState.startDate) 
+                    : new Date(),
+                calendarDays: persistedState?.calendarView === "month"
+                    ? getCalendarDaysForMonth(persistedState?.startDate ? new Date(persistedState.startDate) : new Date())
+                    : persistedState?.calendarView === "week"
+                    ? getCalendarDaysForWeek(persistedState?.startDate ? new Date(persistedState.startDate) : new Date())
+                    : getCalendarDaysForDay(persistedState?.startDate ? new Date(persistedState.startDate) : new Date()),
+            }),
         }
     )
 )
